@@ -1,0 +1,77 @@
+import os
+HERE = os.path.abspath(os.path.dirname(__file__))
+PROJECT_HOME = os.path.abspath(os.path.join(HERE, os.path.pardir))
+
+
+DEBUG = False
+JSON_AS_ASCII = False
+LOG_LEVEL = 'INFO'
+TIME_ZONE = "Asia/Shanghai"
+
+# crawler 缓存时间 10分钟
+CACHE_TIME = 600
+
+# 异步任务线程池大小
+POOL_SIZE = 8
+
+# 防止任务重复创建 同样的任务 10min 内只能创建一次
+TASK_AVOID_REPEAT_TIME = 10 * 60
+
+URL_PREFIX = "http://127.0.0.1:8000"
+SECRET_KEY = "????????????????"
+
+NOT_SUPPORT_SITES = []
+
+
+# 配置代理
+# DEFAULT_PROXY = 'socks5://127.0.0.1:1080'
+DEFAULT_PROXY = None
+
+# 指定哪些站点走代理
+CRAWLER_PROXY = {
+    '18comic': DEFAULT_PROXY,
+    'manhuagui': DEFAULT_PROXY,
+    'nhentai': DEFAULT_PROXY,
+    'wnacg': DEFAULT_PROXY,
+    'acg456': DEFAULT_PROXY,
+    'mh1234': DEFAULT_PROXY,
+    '177pic': DEFAULT_PROXY,
+    '18hmmcg': DEFAULT_PROXY,
+    'xiuren': DEFAULT_PROXY,
+    'picxxxx': DEFAULT_PROXY,
+    'twhentai': DEFAULT_PROXY,
+    'copymanga': DEFAULT_PROXY,
+    'toomics': DEFAULT_PROXY,
+    'webtoons': DEFAULT_PROXY,
+}
+
+# 站点数据存放目录
+DATA_DIR = os.path.join(PROJECT_HOME, 'data')
+# 图片保存目录
+DOWNLOAD_DIR = os.path.join(PROJECT_HOME, 'download')
+# cookies存放目录
+COOKIES_DIR = os.path.join(DATA_DIR, 'cookies')
+
+# node 模块目录
+NODE_MODULES = os.path.join(DATA_DIR, 'node_modules')
+
+# API管理接口登录校验 若留空则不用登录
+USERS = [
+    # {'username': 'admin', 'password': 'admin'}
+]
+
+# 数据库连接
+SQLALCHEMY_ECHO = False
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
+# SQLITE_FILE = os.path.join(DATA_DIR, 'onecomic.db')
+# SQLALCHEMY_DATABASE_URI = f"sqlite:///{SQLITE_FILE}"
+# SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://user:password@ip:port/test?charset=utf8mb4'
+
+MAIL_CONFIG = dict(
+    sender="???@163.com",
+    sender_passwd="???",
+    smtp_server="smtp.163.com",
+    smtp_port=465,
+    receivers=["???@qq.com"]
+)

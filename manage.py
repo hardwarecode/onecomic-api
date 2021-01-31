@@ -1,11 +1,14 @@
+import sys
+import os
+onecomic_project = os.path.abspath(os.path.join('.', os.path.pardir, 'onecomic'))
+sys.path.insert(0, onecomic_project)
+
 from flask_script import (
     Manager,
     Server
 )
-
 from api import create_app
 from api import db
-
 
 app = create_app()
 manager = Manager(app)

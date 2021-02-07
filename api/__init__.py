@@ -11,7 +11,6 @@ from onecomic.crawlerbase import CrawlerBase
 from onecomic.worker import WorkerPoolMgr
 
 from . import config
-from . import const
 from .common import get_cookies_path
 
 db = SQLAlchemy()
@@ -47,7 +46,7 @@ def create_app():
     app.register_blueprint(user_app)
 
     init_crawler(app)
-    WorkerPoolMgr.set_worker(const.POOL_SIZE)
+    WorkerPoolMgr.set_worker(config.POOL_SIZE)
     init_db(app)
     if not app.config.get('USERS'):
         app.config['LOGIN_DISABLED'] = True

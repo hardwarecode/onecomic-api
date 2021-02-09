@@ -80,7 +80,7 @@ def index():
     manage_examples = []
     manage_examples.append(dict(
         desc='添加任务',
-        api=prefix + '/manage/task/add?site=qq&comicid=505430&chapter=-1&gen_pdf=1&send_mail=0',
+        api=prefix + '/manage/task/add?site=qq&comicid=505430&params={"chapters": 1}',
     ))
     manage_examples.append(dict(
         desc='查看任务',

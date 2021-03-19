@@ -5,7 +5,7 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
 from onecomic.utils import ensure_file_dir_exists
-from onecomic.session import SessionMgr
+from onecomic.session import CrawlerSession, ImageSession
 from onecomic.comicbook import ComicBook
 from onecomic.crawlerbase import CrawlerBase
 from onecomic.worker import WorkerPoolMgr
@@ -63,10 +63,12 @@ def init_crawler(app):
         for site in ComicBook.CRAWLER_CLS_MAP:
             proxy = proxy_config.get(site)
             if proxy:
-                SessionMgr.set_proxy(site=site, proxy=proxy)
+                CrawlerSession.set_proxy(site=site, proxy=proxy)
+                ImageSession.set_proxy(site=site, proxy=proxy)
             cookies_path = get_cookies_path(site=site)
             if os.path.exists(cookies_path):
-                SessionMgr.load_cookies(site=site, path=cookies_path)
+                CrawlerSession.load_cookies(site=site, path=cookies_path)
+                ImageSession.load_cookies(site=site, path=cookies_path)
 
 
 def init_db(app):

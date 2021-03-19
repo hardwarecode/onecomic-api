@@ -3,7 +3,7 @@ import cachetools.func
 
 from onecomic.comicbook import ComicBook
 from onecomic.exceptions import SiteNotSupport
-from onecomic.session import SessionMgr
+from onecomic.session import CrawlerSession, ImageSession
 from onecomic.worker import concurrent_run
 
 from .. import config
@@ -86,25 +86,66 @@ def check_site_support(site):
 
 
 def get_cookies(site):
-    return SessionMgr.get_cookies(site=site)
+    return get_crawler_cookies(site=site)
+
+
+def get_crawler_cookies(site):
+    return CrawlerSession.get_cookies(site=site)
+
+
+def get_image_cookies(site):
+    return ImageSession.get_cookies(site=site)
 
 
 def update_cookies(site, cookies, cover=False):
+    update_cralwer_cookies(site=site, cookies=cookies, cover=cover)
+    update_image_cookies(site=site, cookies=cookies, cover=cover)
+    return get_crawler_cookies(site=site)
+
+
+def update_cralwer_cookies(site, cookies, cover=False):
     if cover:
-        SessionMgr.set_proxy.clear_cookies(site=site)
-    SessionMgr.update_cookies(site=site, cookies=cookies)
+        CrawlerSession.set_proxy.clear_cookies(site=site)
+    CrawlerSession.update_cookies(site=site, cookies=cookies)
     cookies_path = get_cookies_path(site=site)
-    SessionMgr.export_cookies(site=site, path=cookies_path)
-    return SessionMgr.get_cookies(site=site)
+    CrawlerSession.export_cookies(site=site, path=cookies_path)
+    return get_crawler_cookies(site=site)
+
+
+def update_image_cookies(site, cookies, cover=False):
+    if cover:
+        ImageSession.set_proxy.clear_cookies(site=site)
+    ImageSession.update_cookies(site=site, cookies=cookies)
+    cookies_path = get_cookies_path(site=site)
+    ImageSession.export_cookies(site=site, path=cookies_path)
+    return get_image_cookies(site=site)
 
 
 def set_proxy(site, proxy):
-    SessionMgr.set_proxy(site=site, proxy=proxy)
-    return get_proxy(site)
+    set_crawler_proxy(site=site, proxy=proxy)
+    set_image_proxy(site=site, proxy=proxy)
+    return get_crawler_proxy(site)
+
+
+def set_crawler_proxy(site, proxy):
+    return CrawlerSession.set_proxy(site=site, proxy=proxy)
+
+
+def set_image_proxy(site, proxy):
+    ImageSession.set_proxy(site=site, proxy=proxy)
+    return get_image_proxy(site=site)
 
 
 def get_proxy(site):
-    return SessionMgr.get_proxy(site=site)
+    return get_crawler_proxy(site=site)
+
+
+def get_crawler_proxy(site):
+    return CrawlerSession.get_proxy(site=site)
+
+
+def get_image_proxy(site):
+    return ImageSession.get_proxy(site=site)
 
 
 def parse_url_info(url):

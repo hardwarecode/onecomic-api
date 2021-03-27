@@ -5,4 +5,4 @@ Flask-Script>=2.0.6
 Flask-SQLAlchemy>=2.4.4
 cachetools>=4.1.1
 pytz>=2019.3
-onecomic>=0.1.14
+onecomic>=0.1.15

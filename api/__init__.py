@@ -54,21 +54,29 @@ def create_app():
 
 
 def init_crawler(app):
-    CrawlerBase.DRIVER_PATH = app.config.get('DRIVER_PATH', '')
-    CrawlerBase.DRIVER_TYPE = app.config.get('DRIVER_TYPE', '')
-    CrawlerBase.NODE_MODULES = app.config.get('NODE_MODULES', 'node_modules')
+    config = app.config
+    CrawlerBase.DRIVER_PATH = config.get('DRIVER_PATH', '')
+    CrawlerBase.DRIVER_TYPE = config.get('DRIVER_TYPE', '')
+    CrawlerBase.NODE_MODULES = config.get('NODE_MODULES', 'node_modules')
     CrawlerBase.HEADLESS = True
-    with app.app_context():
-        proxy_config = app.config.get('CRAWLER_PROXY', {})
-        for site in ComicBook.CRAWLER_CLS_MAP:
-            proxy = proxy_config.get(site)
-            if proxy:
-                CrawlerSession.set_proxy(site=site, proxy=proxy)
-                ImageSession.set_proxy(site=site, proxy=proxy)
-            cookies_path = get_cookies_path(site=site)
-            if os.path.exists(cookies_path):
-                CrawlerSession.load_cookies(site=site, path=cookies_path)
-                ImageSession.load_cookies(site=site, path=cookies_path)
+    image_timeout = config.get('IMAGE_TIMEOUT')
+    crawler_timeout = config.get('CRAWLER_TIMEOUT')
+    proxy_config = app.config.get('CRAWLER_PROXY', {})
+    proxy_params = app.config.get('PROXY_PARAMS', {})
+    for site in ComicBook.CRAWLER_CLS_MAP:
+        proxy = proxy_config.get(site)
+        kwargs = proxy_params.get(proxy, {})
+        if proxy:
+            CrawlerSession.set_proxy(site=site, proxy=proxy, **kwargs)
+            ImageSession.set_proxy(site=site, proxy=proxy, **kwargs)
+        cookies_path = get_cookies_path(site=site)
+        if os.path.exists(cookies_path):
+            CrawlerSession.load_cookies(site=site, path=cookies_path)
+            ImageSession.load_cookies(site=site, path=cookies_path)
+        if image_timeout:
+            ImageSession.set_timeout(site=site, timeout=image_timeout)
+        if crawler_timeout:
+            CrawlerSession.set_timeout(site=site, timeout=crawler_timeout)
 
 
 def init_db(app):

@@ -30,7 +30,7 @@ DEFAULT_PROXY = None
 # 指定哪些站点走代理
 CRAWLER_PROXY = {
     '18comic': DEFAULT_PROXY,
-    'manhuagui': DEFAULT_PROXY,
+    'manhuagui': 'kuaidaili',
     'nhentai': DEFAULT_PROXY,
     'wnacg': DEFAULT_PROXY,
     'acg456': DEFAULT_PROXY,
@@ -43,6 +43,12 @@ CRAWLER_PROXY = {
     'copymanga': DEFAULT_PROXY,
     'toomics': DEFAULT_PROXY,
     'webtoons': DEFAULT_PROXY,
+}
+# 代理配置
+PROXY_PARAMS = {
+    'kuaidaili': {
+        'api_url': 'http://dps.kdlapi.com/api/getdps/?orderid=xxxxxx&num=1&pt=2&sep=1'
+    }
 }
 
 # 站点数据存放目录
@@ -75,3 +81,8 @@ MAIL_CONFIG = dict(
     smtp_port=465,
     receivers=["???@qq.com"]
 )
+
+# 站点访问超时时间 单位秒
+CRAWLER_TIMEOUT = 3
+# 图片下载超时时间 单位秒
+IMAGE_TIMEOUT = 10

@@ -30,7 +30,7 @@ DEFAULT_PROXY = None
 # 指定哪些站点走代理
 CRAWLER_PROXY = {
     '18comic': DEFAULT_PROXY,
-    'manhuagui': 'kuaidaili',
+    #'manhuagui': 'kuaidaili',
     'nhentai': DEFAULT_PROXY,
     'wnacg': DEFAULT_PROXY,
     'acg456': DEFAULT_PROXY,

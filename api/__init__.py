@@ -63,6 +63,12 @@ def init_crawler(app):
     crawler_timeout = config.get('CRAWLER_TIMEOUT')
     proxy_config = app.config.get('CRAWLER_PROXY', {})
     proxy_params = app.config.get('PROXY_PARAMS', {})
+    site_index_config = app.config.get('CRAWLER_SITE_INDEX', {})
+    for site, new_site_index in site_index_config.items():
+        crawler_cls = ComicBook.CRAWLER_CLS_MAP.get(site)
+        if crawler_cls:
+            crawler_cls.SITE_INDEX = new_site_index
+
     for site in ComicBook.CRAWLER_CLS_MAP:
         proxy = proxy_config.get(site)
         kwargs = proxy_params.get(proxy, {})

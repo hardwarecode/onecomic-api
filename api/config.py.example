@@ -43,7 +43,16 @@ CRAWLER_PROXY = {
     'copymanga': DEFAULT_PROXY,
     'toomics': DEFAULT_PROXY,
     'webtoons': DEFAULT_PROXY,
+    'webtoons': DEFAULT_PROXY,
 }
+
+# 如果站点域名改了，但样式没改，可以通过该参数调整站点域名
+CRAWLER_SITE_INDEX = {
+    "gufengmh": "https://www.gufengmh9.com/",
+    "copymanga": "https://www.copymanga.org/",
+    "77mh": "https://www.77mh.in/"
+}
+
 # 代理配置
 PROXY_PARAMS = {
     'kuaidaili': {
